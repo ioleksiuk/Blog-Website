@@ -1,0 +1,61 @@
+{% extends 'blog/main.html' %}
+{% block main_section %}
+
+    {% for post in news %}
+    <div class="alert alert-light">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text |striptags|truncatechars:300 }}</p>
+        <div class="row">
+            <div class="col-md-2">
+                {% if post.author.profile.img %}
+                <img src="{{ post.author.profile.img.url }}" alt="{{ post.author }}" class="user_image" style="width:40px; height: 40px; border-radius: 50%;  margin-left:20px">
+                {% else %}
+                    <img src="/pictures/default.jpg" alt="{{ post.author }}" class="user_image" style="width:40px; height: 40px; border-radius: 50%;  margin-left:20px">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-10">
+            {% if post.author %}
+            <p><b>Author:</b><a href="/user/{{ post.author }}">{{ post.author}}</a></p>
+            {% else %}
+                <p>Author: Admin</p>
+            {% endif %}
+            <p> date: {{ post.date|date:"j F A, H:i:s" }}</p>
+
+        </div>
+        <a href="{% url 'news-detail' post.id %}" class="btn btn-outline-warning">Read more</a>
+    </div>
+    {% endfor %}
+
+{% if is_paginated %}
+
+    {% if page_obj.has_previous %}
+        <a href="/" class="btn btn-outline-warning">Beginning </a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-warning">Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if num == page_object.number %}
+            <button class="btn btn-warning"> {{ num }}</button>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+            <a href="?page={{ num }}" class="btn btn-outline-warning">{{ num }} </a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ age_obj.next_page_number }}" class="btn btn-outline-warning">Next </a>
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-warning">Last</a>
+    {% endif %}
+
+{% endif %}
+
+{% endblock main_section %}
+
+{% block aside_news_section %}
+    <h3><b>Interesting articles</b></h3>
+                <img src="https://cdn.tutsplus.com/net/uploads/2013/08/github-collab-retina-preview.gif" class="img-thumbnail mb-1">
+                <p>Be sure to have your pages set up with the latest design and development standards.</p>
+                <a href="" target="_blank">
+                    <button class="btn btn-warning"> Open </button>
+                </a>
+{% endblock aside_news_section %}

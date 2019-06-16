@@ -1,0 +1,18 @@
+{% extends 'blog/main.html' %}
+{% load crispy_forms_tags %}
+{% block main_section %}
+
+<div class="form-section">
+    <h2>You successfuly loged out</h2>
+    Login again <a href="{% url 'user' %}">Log in</a>
+</div>
+{% endblock main_section %}
+
+{% block aside_news_section %}
+    <h3><b>Interesting articles</b></h3>
+                <img src="https://cdn.tutsplus.com/net/uploads/2013/08/github-collab-retina-preview.gif" class="img-thumbnail mb-1">
+                <p>Be sure to have your pages set up with the latest design and development standards.</p>
+                <a href="" target="_blank">
+                    <button class="btn btn-warning"> Open </button>
+                </a>
+{% endblock aside_news_section %}

@@ -1,0 +1,43 @@
+{% extends 'blog/main.html' %}
+{% block main_section %}
+
+    <div class="alert alert-light">
+        <p><a href="{% url 'blog-home' %}"> Go back </a></p>
+        <h1>{{ object.title }}</h1>
+        <p>{{ object.text|safe}}</p>
+        <div class="row">
+            <div class="col-md-2">
+                {% if object.author.profile.img %}
+                <img src="{{ object.author.profile.img.url }}" alt="{{ object.author }}" class="user_image" style="width:64px; height: 64px; border-radius: 50%;  margin-left:20px">
+                {% else %}
+                    <img src="/pictures/default.jpg" alt="{{ object.author }}" class="user_image" style="width:64px; height: 64px; border-radius: 50%;  margin-left:20px">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-10">
+            {% if object.author %}
+            <p>Author: {{ object.author}}</p>
+            {% else %}
+                <p><b>Author:</b><a href="{% url 'user-news' object.author %}">{{ object.author}}</a></p>Admin</p>
+            {% endif %}
+            <p> date: {{ object.date|date:"j F A, H:i:s" }}</p>
+
+        </div>
+    </div>
+
+{% if object.author == user %}
+<hr>
+<a href="{% url 'news-update' object.id %}" class="btn btn-info">Update Post</a>
+<a href="{% url 'news-delete' object.id %}" class="btn btn-danger">Delete Post</a>
+
+{% endif %}
+{% endblock main_section %}
+
+{% block aside_news_section %}
+    <h3><b>Interesting articles</b></h3>
+                <img src="https://cdn.tutsplus.com/net/uploads/2013/08/github-collab-retina-preview.gif" class="img-thumbnail mb-1">
+                <p>Be sure to have your pages set up with the latest design and development standards.</p>
+                <a href="" target="_blank">
+                    <button class="btn btn-warning"> Open </button>
+                </a>
+{% endblock aside_news_section %}
